@@ -8,16 +8,14 @@
         * { box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f0f2f5; color: #1c1e21; }
         
+        /* Keep nav positioned so dropdown can be placed relative to it */
         header { background-color: #0d6efd; color: white; padding: 20px; text-align: center; }
         header h1 { margin: 0; font-size: 28px; }
-        
-        /* Keep nav positioned so dropdown can be placed relative to it */
         nav { background: #212529; padding: 12px; text-align: center; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; position: relative; z-index: 20; }
         nav a, nav button.nav-toggle { color: #f8f9fa; text-decoration: none; font-size: 15px; font-weight: 500; background: transparent; border: none; cursor: pointer; }
         
         /* Dropdown styles for "الكورسات" */
         .nav-dropdown { position: relative; }
-        /* place the menu directly under the nav item (top:100%) and remove centering transform */
         .nav-dropdown .menu { position: absolute; top: calc(100% + 8px); left: 0; background: #fff; color: #212529; border-radius: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.12); min-width: 220px; padding: 8px 0; display: none; z-index: 30; }
         .nav-dropdown .menu a { display: block; padding: 10px 14px; color: #212529; text-decoration: none; font-weight: 500; }
         .nav-dropdown .menu a:hover, .nav-dropdown .menu a:focus { background: #f1f5f9; }
@@ -67,7 +65,7 @@
         <div class="menu" role="menu" aria-labelledby="coursesToggle">
           <a href="#course-english" role="menuitem">1 - كورس إنجليزي</a>
           <a href="#course-german" role="menuitem">2 - كورس ألماني</a>
-          <a href="#course-french" role="menuitem">3 - كورس فرانسوي</a>
+          <a href="#course-french" role="menuitem">3 - كورس لغة فرنسية</a>
           <a href="#course-webdesign" role="menuitem">4 - كورس تصميم مواقع إنترنت</a>
         </div>
       </div>
@@ -121,7 +119,7 @@
             </div>
 
             <div class="card" id="course-french">
-                <h4>🇫🇷 كورس فرانسوي — French Course</h4>
+                <h4>🇫🇷 كورس لغة فرنسية — French Course</h4>
                 <p>دورات لتعلم اللغة الفرنسية من الأساس وحتى المستوى المتقدم.</p>
             </div>
 
