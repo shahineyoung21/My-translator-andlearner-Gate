@@ -1,1 +1,162 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>المترجم المتعدد اللغات - EduLearn</title>
+  <style>
+    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { margin: 0; padding: 20px; background-color: #f0f2f5; color: #1c1e21; }
+    .container { max-width: 800px; margin: auto; background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+    h1 { color: #0d6efd; text-align: center; margin-bottom: 20px; font-size: 1.8rem; }
+    
+    .controls { display: flex; gap: 10px; align-items: center; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
+    select { padding: 10px 14px; border-radius: 8px; border: 1px solid #ced4da; font-size: 15px; background-color: #fff; cursor: pointer; }
+    .swap-btn { background: #e9ecef; border: 1px solid #ced4da; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+    .swap-btn:hover { background: #dee2e6; }
 
+    .translation-box { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    @media (max-width: 600px) { .translation-box { grid-template-columns: 1fr; } }
+
+    textarea { width: 100%; height: 160px; padding: 12px; border-radius: 8px; border: 1px solid #ced4da; font-size: 16px; resize: none; outline: none; }
+    textarea:focus { border-color: #0d6efd; }
+    
+    .actions { display: flex; justify-content: space-between; margin-top: 8px; }
+    .btn-action { background: #f8f9fa; border: 1px solid #ced4da; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 13px; }
+    .btn-action:hover { background: #e2e6ea; }
+
+    .btn-translate { display: block; width: 100%; margin-top: 20px; padding: 12px; background-color: #0d6efd; color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; }
+    .btn-translate:hover { background-color: #0b5ed7; }
+
+    .back-link { display: block; text-align: center; margin-top: 20px; color: #0d6efd; text-decoration: none; font-weight: 500; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>المترجم الذكي المباشر</h1>
+
+    <div class="controls">
+      <select id="fromLang">
+        <option value="autodetect">تحديد تلقائي</option>
+        <option value="en">الإنجليزية (English)</option>
+        <option value="ar" selected>العربية</option>
+        <option value="fr">الفرنسية (Français)</option>
+        <option value="de">الألمانية (Deutsch)</option>
+        <option value="es">الإسبانية (Español)</option>
+        <option value="it">الإيطالية (Italiano)</option>
+        <option value="ru">الروسية (Русский)</option>
+        <option value="zh">الصينية (中文)</option>
+        <option value="tr">التركية (Türkçe)</option>
+      </select>
+
+      <button class="swap-btn" id="swapBtn" title="تبادل اللغات">⇄</button>
+
+      <select id="toLang">
+        <option value="en" selected>الإنجليزية (English)</option>
+        <option value="ar">العربية</option>
+        <option value="fr">الفرنسية (Français)</option>
+        <option value="de">الألمانية (Deutsch)</option>
+        <option value="es">الإسبانية (Español)</option>
+        <option value="it">الإيطالية (Italiano)</option>
+        <option value="ru">الروسية (Русский)</option>
+        <option value="zh">الصينية (中文)</option>
+        <option value="tr">التركية (Türkçe)</option>
+      </select>
+    </div>
+
+    <div class="translation-box">
+      <div>
+        <textarea id="inputText" placeholder="اكتب النص هنا..."></textarea>
+        <div class="actions">
+          <button class="btn-action" onclick="speakText('inputText', 'fromLang')">🔊 استماع</button>
+          <button class="btn-action" onclick="clearText()">🗑️ مسح</button>
+        </div>
+      </div>
+
+      <div>
+        <textarea id="outputText" placeholder="الترجمة تظهر هنا..." readonly></textarea>
+        <div class="actions">
+          <button class="btn-action" onclick="speakText('outputText', 'toLang')">🔊 استماع</button>
+          <button class="btn-action" onclick="copyText()">📋 نسخ</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-translate" onclick="translateText()">ترجمة النص</button>
+
+    <a href="index.html" class="back-link">← العودة للصفحة الرئيسية</a>
+  </div>
+
+  <script>
+    async function translateText() {
+      const input = document.getElementById('inputText').value.trim();
+      const output = document.getElementById('outputText');
+      let from = document.getElementById('fromLang').value;
+      const to = document.getElementById('toLang').value;
+
+      if (!input) {
+        output.value = '';
+        return;
+      }
+
+      output.value = 'جاري الترجمة...';
+
+      if (from === 'autodetect') from = 'Autodetect';
+
+      const langPair = `${from}|${to}`;
+      const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(input)}&langpair=${langPair}`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        if (data.responseData) {
+          output.value = data.responseData.translatedText;
+        } else {
+          output.value = 'حدث خطأ أثناء الترجمة، حاول مجدداً.';
+        }
+      } catch (error) {
+        output.value = 'فشل الاتصال بالخدمة. تحقق من الاتصال بالإنترنت.';
+      }
+    }
+
+    document.getElementById('swapBtn').addEventListener('click', () => {
+      const fromSelect = document.getElementById('fromLang');
+      const toSelect = document.getElementById('toLang');
+      if (fromSelect.value === 'autodetect') return;
+      
+      const temp = fromSelect.value;
+      fromSelect.value = toSelect.value;
+      toSelect.value = temp;
+
+      const inputText = document.getElementById('inputText');
+      const outputText = document.getElementById('outputText');
+      const tempText = inputText.value;
+      inputText.value = outputText.value;
+      outputText.value = tempText;
+    });
+
+    function speakText(areaId, langSelectId) {
+      const text = document.getElementById(areaId).value;
+      if (!text) return;
+      const lang = document.getElementById(langSelectId).value;
+      const utterance = new SpeechSynthesisUtterance(text);
+      if (lang !== 'autodetect') utterance.lang = lang;
+      speechSynthesis.speak(utterance);
+    }
+
+    function copyText() {
+      const outputText = document.getElementById('outputText');
+      if (outputText.value) {
+        navigator.clipboard.writeText(outputText.value);
+        alert('تم نسخ الترجمة!');
+      }
+    }
+
+    function clearText() {
+      document.getElementById('inputText').value = '';
+      document.getElementById('outputText').value = '';
+    }
+  </script>
+</body>
+</html>
