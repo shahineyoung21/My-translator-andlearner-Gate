@@ -11,12 +11,14 @@
         header { background-color: #0d6efd; color: white; padding: 20px; text-align: center; }
         header h1 { margin: 0; font-size: 28px; }
         
-        nav { background: #212529; padding: 12px; text-align: center; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; position: relative; }
+        /* Keep nav positioned so dropdown can be placed relative to it */
+        nav { background: #212529; padding: 12px; text-align: center; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; position: relative; z-index: 20; }
         nav a, nav button.nav-toggle { color: #f8f9fa; text-decoration: none; font-size: 15px; font-weight: 500; background: transparent; border: none; cursor: pointer; }
         
-        /* Dropdown styles for "الكور��ات" */
+        /* Dropdown styles for "الكورسات" */
         .nav-dropdown { position: relative; }
-        .nav-dropdown .menu { position: absolute; top: 46px; left: 50%; transform: translateX(-50%); background: #fff; color: #212529; border-radius: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.12); min-width: 220px; padding: 8px 0; display: none; z-index: 30; }
+        /* place the menu directly under the nav item (top:100%) and remove centering transform */
+        .nav-dropdown .menu { position: absolute; top: calc(100% + 8px); left: 0; background: #fff; color: #212529; border-radius: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.12); min-width: 220px; padding: 8px 0; display: none; z-index: 30; }
         .nav-dropdown .menu a { display: block; padding: 10px 14px; color: #212529; text-decoration: none; font-weight: 500; }
         .nav-dropdown .menu a:hover, .nav-dropdown .menu a:focus { background: #f1f5f9; }
         .nav-dropdown.open .menu { display: block; }
@@ -43,9 +45,10 @@
 
         footer { background: #212529; color: #adb5bd; text-align: center; padding: 15px; font-size: 13px; margin-top: 30px; }
 
-        /* Simple responsive behaviour */
+        /* Responsive adjustments: make dropdown full-width on small screens and avoid overlapping content */
         @media (max-width: 600px) {
-          .nav-dropdown .menu { left: 50%; transform: translateX(-50%); }
+          nav { padding: 10px; }
+          .nav-dropdown .menu { left: 8px; right: 8px; min-width: unset; width: calc(100% - 16px); top: calc(100% + 6px); }
         }
     </style>
 </head>
