@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>English Placement Test - EduLearn</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background-color: #f0f2f5; color: #1c1e21; }
+    .container { max-width: 700px; margin: auto; background: #fff; padding: 28px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+    h1 { color: #0d6efd; text-align: center; margin: 0 0 6px 0; font-size: 1.6rem; }
+    p.subtitle { text-align: center; color: #6c757d; font-size: 0.95rem; margin: 0 0 20px; }
+    form { display: grid; gap: 18px; }
+    fieldset { border: none; padding: 0; margin: 0; }
+    .question { margin-bottom: 6px; padding: 14px; border-radius: 8px; background: #fafafa; border: 1px solid #eef0f3; }
+    legend { font-weight: 600; color: #212529; margin-bottom: 8px; }
+    .options label { display: block; margin: 8px 0; cursor: pointer; font-size: 15px; color: #495057; padding: 6px 8px; border-radius: 6px; }
+    .options input[type="radio"] { margin-right: 10px; accent-color: #0d6efd; vertical-align: middle; }
+    .options label:focus-within, .options label:hover { background: rgba(13,110,253,0.04); outline: none; }
+    .btn-submit { display:block; width:100%; padding:12px; background-color:#0d6efd; color:#fff; border:none; border-radius:8px; font-size:16px; font-weight:700; cursor:pointer; }
+    .btn-submit:focus { outline:3px solid rgba(13,110,253,.18); }
+    #result { display:none; margin-top:18px; padding:14px; border-radius:8px; text-align:center; font-size:1rem; font-weight:600; }
+    .feedback { margin-top:10px; text-align:left; font-weight:500; font-size:0.95rem; }
+    .sr-only { position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden; }
+    a.back-link { display:block; text-align:center; margin-top:18px; color:#0d6efd; text-decoration:none; font-weight:500; }
+    /* Color tokens for results */
+    .result-success { background:#d1e7dd; color:#0f5132; border:1px solid rgba(15,81,50,.08); }
+    .result-warning { background:#fff3cd; color:#664d03; border:1px solid rgba(102,77,3,.06); }
+    .result-error { background:#f8d7da; color:#842029; border:1px solid rgba(132,32,41,.06); }
+    @media (max-width:420px){ .container{padding:18px} .btn-submit{font-size:15px} }
+  </style>
+</head>
+<body>
+  <div class="container" role="main">
+    <h1>English Placement Test</h1>
+    <p class="subtitle">Answer 3 short questions to determine your starting level.</p>
+
+    <form id="quizForm" novalidate>
+      <fieldset class="question" aria-labelledby="q1-legend">
+        <legend id="q1-legend">1. She ______ to the store yesterday.</legend>
+        <div class="options" role="radiogroup" aria-labelledby="q1-legend">
+          <label><input type="radio" name="q1" value="go" required>go</label>
+          <label><input type="radio" name="q1" value="went">went</label>
+          <label><input type="radio" name="q1" value="gone">gone</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="question" aria-labelledby="q2-legend">
+        <legend id="q2-legend">2. If it rains tomorrow, we ______ the match.</legend>
+        <div class="options" role="radiogroup" aria-labelledby="q2-legend">
+          <label><input type="radio" name="q2" value="cancel" required>cancel</label>
+          <label><input type="radio" name="q2" value="will cancel">will cancel</label>
+          <label><input type="radio" name="q2" value="cancelled">cancelled</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="question" aria-labelledby="q3-legend">
+        <legend id="q3-legend">3. I have been learning English ______ three years.</legend>
+        <div class="options" role="radiogroup" aria-labelledby="q3-legend">
+          <label><input type="radio" name="q3" value="for" required>for</label>
+          <label><input type="radio" name="q3" value="since">since</label>
+          <label><input type="radio" name="q3" value="from">from</label>
+        </div>
+      </fieldset>
+
+      <button type="submit" class="btn-submit">Submit Test</button>
+    </form>
+
+    <div id="result" role="status" aria-live="polite"></div>
+
+    <div id="detailedFeedback" class="feedback" aria-hidden="true"></div>
+
+    <a href="index.html" class="back-link">← Back to Main Page</a>
+    <noscript class="sr-only">This test requires JavaScript to show results. Please enable JavaScript.</noscript>
+  </div>
+
+  <script>
+    (function () {
+      // canonical answers
+      const answers = { q1: 'went', q2: 'will cancel', q3: 'for' };
+      const form = document.getElementById('quizForm');
+      const resultDiv = document.getElementById('result');
+      const detailed = document.getElementById('detailedFeedback');
+
+      // restore last result from localStorage (optional convenience)
+      try {
+        const saved = localStorage.getItem('edu_placement_result');
+        if (saved) {
+          const obj = JSON.parse(saved);
+          resultDiv.style.display = 'block';
+          resultDiv.className = obj.className;
+          resultDiv.innerHTML = obj.html;
+          detailed.innerText = obj.detail || '';
+          detailed.setAttribute('aria-hidden', obj.detail ? 'false' : 'true');
+        }
+      } catch (e) {
+        // ignore storage errors (e.g., private mode)
+      }
+
+      form.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        // HTML5 required on radio groups will block submission if any group left empty.
+        // However, do an extra check in JS for older browsers.
+        const formData = new FormData(form);
+        const qKeys = ['q1','q2','q3'];
+        for (const k of qKeys) {
+          if (!formData.has(k)) {
+            // focus the first missing group for accessibility
+            const firstInput = form.querySelector(`[name="${k}"]`);
+            if (firstInput) firstInput.focus();
+            firstInput && firstInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+          }
+        }
+
+        let score = 0;
+        const perQuestion = [];
+
+        qKeys.forEach(key => {
+          const user = formData.get(key);
+          const correct = answers[key];
+          const ok = user === correct;
+          if (ok) score++;
+          perQuestion.push({ key, user, correct, ok });
+        });
+
+        // Build result
+        let className = '';
+        let html = '';
+        if (score === 3) {
+          className = 'result-success';
+          html = '🎉 Perfect Score! Your Level is: <strong>Advanced (B2/C1)</strong>';
+        } else if (score === 2) {
+          className = 'result-warning';
+          html = '👍 Good Job! Your Level is: <strong>Intermediate (B1)</strong>';
+        } else {
+          className = 'result-error';
+          html = '📚 Keep Going! Your Level is: <strong>Beginner (A1/A2)</strong>';
+        }
+
+        // Detailed feedback: show which questions were incorrect and correct answers
+        const incorrect = perQuestion.filter(p => !p.ok);
+        let detailText = '';
+        if (incorrect.length) {
+          detailText = 'Review: ';
+          detailText += incorrect.map(p => {
+            return `${p.key.toUpperCase().replace('Q','Question ')} — your answer: "${p.user}", correct: "${p.correct}"`;
+          }).join('; ');
+        } else {
+          detailText = 'All answers correct — great work!';
+        }
+
+        // show on page
+        resultDiv.style.display = 'block';
+        resultDiv.className = className;
+        resultDiv.innerHTML = `${html} <div style="font-size:0.9rem;margin-top:8px;color:inherit">Score: ${score} / 3</div>`;
+
+        detailed.innerText = detailText;
+        detailed.setAttribute('aria-hidden', 'false');
+
+        // store last result (non-sensitive)
+        try {
+          localStorage.setItem('edu_placement_result', JSON.stringify({
+            className, html: resultDiv.innerHTML, detail: detailText, timestamp: Date.now()
+          }));
+        } catch (e) { /* ignore storage errors */ }
+
+        // move focus to result for screen reader users
+        resultDiv.focus && resultDiv.setAttribute('tabindex', '-1') && resultDiv.focus();
+      });
+    })();
+  </script>
+</body>
+</html>

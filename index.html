@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduLearn - Online Academy</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f0f2f5; color: #1c1e21; }
+        
+        header { background-color: #0d6efd; color: white; padding: 20px; text-align: center; }
+        header h1 { margin: 0; font-size: 28px; }
+        
+        nav { background: #212529; padding: 12px; text-align: center; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        nav a { color: #f8f9fa; text-decoration: none; font-size: 15px; font-weight: 500; }
+        
+        .hero { padding: 30px 20px; text-align: center; background: #ffffff; }
+        .hero img { width: 100%; max-width: 400px; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .hero h2 { color: #0d6efd; font-size: 24px; margin: 0 0 10px; }
+        .hero p { color: #495057; font-size: 16px; margin-bottom: 20px; }
+        
+        .btn-group { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+        .btn { padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; width: 100%; max-width: 300px; text-align: center; }
+        .btn-primary { background-color: #0d6efd; color: white; }
+        .btn-secondary { background-color: #6c757d; color: white; }
+        
+        .trial-banner { background: #fff3cd; color: #856404; padding: 10px; margin: 20px auto; max-width: 600px; border-radius: 8px; font-weight: bold; text-align: center; border: 1px solid #ffeeba; }
+
+        .container { padding: 20px; max-width: 600px; margin: auto; }
+        .container h3 { text-align: center; color: #0d6efd; font-size: 20px; margin-bottom: 20px; }
+        
+        .courses { display: flex; flex-direction: column; gap: 15px; }
+        .card { background: white; padding: 20px; border-radius: 12px; border-left: 5px solid #0d6efd; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .card h4 { margin: 0 0 10px 0; color: #0d6efd; font-size: 18px; }
+        .card p { margin: 0; color: #495057; font-size: 14px; line-height: 1.5; }
+        
+        footer { background: #212529; color: #adb5bd; text-align: center; padding: 15px; font-size: 13px; margin-top: 30px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>EduLearn Academy</h1>
+    </header>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#courses">Courses</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <section class="hero">
+        <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=600" alt="Child Learning">
+        <h2>Start Learning Today</h2>
+        <p>Explore thousands of interactive courses from top educators worldwide.</p>
+        
+        <div class="btn-group">
+            <a href="test.html" class="btn btn-primary">Start Level Test</a>
+            <a href="#" class="btn btn-secondary">Subscription Info</a>
+        </div>
+    </section>
+
+    <div class="trial-banner">
+        🎉 Special Offer: Enjoy a 2-Month Free Trial!
+    </div>
+
+    <div class="container" id="courses">
+        <h3>Featured Courses</h3>
+        <div class="courses">
+            <div class="card">
+                <h4>💻 Web Development</h4>
+                <p>Learn HTML, CSS, and JavaScript from scratch.</p>
+            </div>
+            <div class="card">
+                <h4>📊 Data Science</h4>
+                <p>Master Python, SQL, and data analysis concepts.</p>
+            </div>
+            <div class="card">
+                <h4>🚀 Digital Marketing</h4>
+                <p>Build strategies for SEO, social media, and ads.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 EduLearn Academy. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
