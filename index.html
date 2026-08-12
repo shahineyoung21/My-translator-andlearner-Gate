@@ -34,15 +34,15 @@
             display: flex; 
             justify-content: center; 
             align-items: center;
-            gap: 12px; 
+            gap: 10px; 
             flex-wrap: wrap; 
         }
         nav a { 
             color: #f8fafc; 
             text-decoration: none; 
-            font-size: 14px; 
+            font-size: 13px; 
             font-weight: 600; 
-            padding: 6px 12px; 
+            padding: 6px 10px; 
             border-radius: 6px; 
             transition: background 0.2s;
         }
@@ -54,9 +54,9 @@
             background: transparent;
             color: #f8fafc;
             border: none;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
-            padding: 6px 12px;
+            padding: 6px 10px;
             cursor: pointer;
             border-radius: 6px;
             display: flex;
@@ -90,7 +90,7 @@
 
         .container { max-width: 850px; margin: 20px auto; padding: 0 15px; }
 
-        /* بطاقة تحفيز ودعاء */
+        /* بطاقة تحفيز ودعاء بدون صور خارجية للموثوقية */
         .motivation-card {
             background: white;
             border-radius: 16px;
@@ -99,10 +99,17 @@
             margin-bottom: 20px;
             border: 1px solid #e2e8f0;
         }
-        .motivation-img { width: 100%; height: 150px; object-fit: cover; }
+        .motivation-header {
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 16px;
+        }
         .motivation-text { padding: 18px; text-align: center; }
-        .wisdom { font-size: 17px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
-        .duaa { font-size: 14px; color: #334155; background: #eff6ff; padding: 10px 14px; border-radius: 10px; border-right: 4px solid #0d6efd; text-align: right; }
+        .wisdom { font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 12px; }
+        .duaa { font-size: 14px; color: #1e3a8a; background: #eff6ff; padding: 12px 14px; border-radius: 10px; border-right: 4px solid #0d6efd; text-align: right; line-height: 1.7; }
 
         /* تحديد الصف الدراسي */
         .grade-selector {
@@ -114,12 +121,12 @@
         }
         .grade-btn {
             flex: 1;
-            min-width: 140px;
+            min-width: 130px;
             padding: 12px;
             border: 2px solid #cbd5e1;
             background: white;
             border-radius: 12px;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -146,19 +153,19 @@
             cursor: pointer;
             transition: 0.2s ease;
         }
-        .subject-header { display: flex; justify-content: space-between; align-items: center; font-size: 18px; font-weight: 700; }
+        .subject-header { display: flex; justify-content: space-between; align-items: center; font-size: 17px; font-weight: 700; }
         
         .subject-content { display: none; margin-top: 15px; border-top: 1px solid #f1f5f9; padding-top: 15px; }
         .subject-content.open { display: block; }
 
-        .section-title { font-weight: 700; color: #0d6efd; margin: 12px 0 6px 0; font-size: 15px; display: flex; align-items: center; gap: 6px; }
+        .section-title { font-weight: 700; color: #0d6efd; margin: 12px 0 6px 0; font-size: 14px; display: flex; align-items: center; gap: 6px; }
         .item-list { list-style: none; padding: 0; }
         .item-list li {
             padding: 10px 12px;
             background: #f8fafc;
             border-radius: 8px;
             margin-bottom: 6px;
-            font-size: 14px;
+            font-size: 13px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -219,7 +226,7 @@
 
         <a href="translator.html">المترجم الذكي</a>
         <a href="test.html">اختبار المستوى</a>
-        <a href="#" style="background: #2563eb; color: white;">الاشتراك والتسجيل بالمركز</a>
+        <a href="subscribe.html" style="background: #2563eb; color: white;">الاشتراك والتسجيل بالمركز</a>
     </nav>
 
     <div class="container">
@@ -250,12 +257,12 @@
         // التحفيز والدعاء
         const motivationalData = [
             {
-                img: "https://images.unsplash.com/photo-1506784365847-bad5c72e44ba?w=700",
+                title: "🌟 رسالة اليوم للطلاب الأبطال",
                 wisdom: "💡 من سار على الدرب وصل.. ابدأ الآن ولا تؤجل عمل اليوم إلى الغد.",
                 duaa: "🤲 اللهم إني أسألك فهم النبيين وحفظ المرسلين، واجعل لساني عامراً بذكرك وقلبي بخشيتك."
             },
             {
-                img: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=700",
+                title: "🚀 مفتاح التفوق والقمة",
                 wisdom: "💡 النجاح هو مجمل أخطاء صغيرة يتم تصحيحها كل يوم بالمراجعة والاستمرار.",
                 duaa: "🤲 اللهم لا سهل إلا ما جعلته سهلاً، وأنت تجعل الحزن إذا شئت سهلاً، يسر لي كل عسير."
             }
@@ -264,7 +271,7 @@
         function setMotivation() {
             const random = motivationalData[Math.floor(Math.random() * motivationalData.length)];
             document.getElementById('motivationCard').innerHTML = `
-                <img src="${random.img}" class="motivation-img" alt="Motivation">
+                <div class="motivation-header">${random.title}</div>
                 <div class="motivation-text">
                     <div class="wisdom">${random.wisdom}</div>
                     <div class="duaa">${random.duaa}</div>
@@ -380,5 +387,5 @@
         renderSubjects(1);
     </script>
 </body>
-    </html>
+        </html>
     
