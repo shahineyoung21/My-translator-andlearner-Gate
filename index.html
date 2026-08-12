@@ -1,194 +1,316 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduLearn - Online Academy</title>
+    <title>EduLearn - بوابة التفوق الدراسي</title>
     <style>
-        * { box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f0f2f5; color: #1c1e21; }
-        
-        /* Keep nav positioned so dropdown can be placed relative to it */
-        header { background-color: #0d6efd; color: white; padding: 20px; text-align: center; }
-        header h1 { margin: 0; font-size: 28px; }
-        nav { background: #212529; padding: 12px; text-align: center; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; position: relative; z-index: 20; }
-        nav a, nav button.nav-toggle { color: #f8f9fa; text-decoration: none; font-size: 15px; font-weight: 500; background: transparent; border: none; cursor: pointer; }
-        
-        /* Dropdown styles for "الكورسات" */
-        .nav-dropdown { position: relative; }
-        .nav-dropdown .menu { position: absolute; top: calc(100% + 8px); left: 0; background: #fff; color: #212529; border-radius: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.12); min-width: 220px; padding: 8px 0; display: none; z-index: 30; }
-        .nav-dropdown .menu a { display: block; padding: 10px 14px; color: #212529; text-decoration: none; font-weight: 500; }
-        .nav-dropdown .menu a:hover, .nav-dropdown .menu a:focus { background: #f1f5f9; }
-        .nav-dropdown.open .menu { display: block; }
-
-        .hero { padding: 30px 20px; text-align: center; background: #ffffff; }
-        .hero img { width: 100%; max-width: 400px; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .hero h2 { color: #0d6efd; font-size: 24px; margin: 0 0 10px; }
-        .hero p { color: #495057; font-size: 16px; margin-bottom: 20px; }
-        
-        .btn-group { display: flex; flex-direction: column; gap: 10px; align-items: center; }
-        .btn { padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; width: 100%; max-width: 300px; text-align: center; }
-        .btn-primary { background-color: #0d6efd; color: white; }
-        .btn-secondary { background-color: #6c757d; color: white; }
-        
-        .trial-banner { background: #fff3cd; color: #856404; padding: 10px; margin: 20px auto; max-width: 600px; border-radius: 8px; font-weight: bold; text-align: center; border: 1px solid #ffeeba; }
-
-        .container { padding: 20px; max-width: 900px; margin: auto; }
-        .container h3 { text-align: center; color: #0d6efd; font-size: 20px; margin-bottom: 20px; }
-        
-        .courses { display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 15px; }
-        .card { background: white; padding: 20px; border-radius: 12px; border-left: 5px solid #0d6efd; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .card h4 { margin: 0 0 10px 0; color: #0d6efd; font-size: 18px; }
-        .card p { margin: 0; color: #495057; font-size: 14px; line-height: 1.5; }
-
-        footer { background: #212529; color: #adb5bd; text-align: center; padding: 15px; font-size: 13px; margin-top: 30px; }
-
-        /* Responsive adjustments: make dropdown full-width on small screens and avoid overlapping content */
-        @media (max-width: 600px) {
-          nav { padding: 10px; }
-          .nav-dropdown .menu { left: 8px; right: 8px; min-width: unset; width: calc(100% - 16px); top: calc(100% + 6px); }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f6f9;
+            color: #1e293b;
+            line-height: 1.6;
         }
+
+        /* هيدر عصري */
+        .header {
+            background: linear-gradient(135deg, #0d6efd, #1e3a8a);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header h1 { font-size: 24px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .user-badge { background: rgba(255,255,255,0.2); border-radius: 20px; padding: 4px 12px; font-size: 13px; }
+
+        /* القائمة العلوية */
+        nav { background: #0f172a; padding: 10px; text-align: center; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        nav a { color: #f8fafc; text-decoration: none; font-size: 14px; font-weight: 600; padding: 4px 10px; border-radius: 6px; }
+        nav a:hover { background: #334155; }
+
+        .container { max-width: 850px; margin: 20px auto; padding: 0 15px; }
+
+        /* بطاقة تحفيز ودعاء */
+        .motivation-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+        }
+        .motivation-img { width: 100%; height: 150px; object-fit: cover; }
+        .motivation-text { padding: 18px; text-align: center; }
+        .wisdom { font-size: 17px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
+        .duaa { font-size: 14px; color: #334155; background: #eff6ff; padding: 10px 14px; border-radius: 10px; border-right: 4px solid #0d6efd; text-align: right; }
+
+        /* تحديد الصف الدراسي */
+        .grade-selector {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .grade-btn {
+            flex: 1;
+            min-width: 140px;
+            padding: 12px;
+            border: 2px solid #cbd5e1;
+            background: white;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #475569;
+        }
+        .grade-btn.active {
+            border-color: #0d6efd;
+            background: #0d6efd;
+            color: white;
+            box-shadow: 0 4px 12px rgba(13,110,253,0.25);
+        }
+
+        /* شبكة المواد */
+        .subjects-grid { display: grid; gap: 15px; }
+        .subject-card {
+            background: white;
+            border-radius: 14px;
+            padding: 18px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+            border-right: 6px solid #ccc;
+            border-left: 1px solid #e2e8f0;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+        .subject-header { display: flex; justify-content: space-between; align-items: center; font-size: 18px; font-weight: 700; }
+        
+        .subject-content { display: none; margin-top: 15px; border-top: 1px solid #f1f5f9; padding-top: 15px; }
+        .subject-content.open { display: block; }
+
+        .section-title { font-weight: 700; color: #0d6efd; margin: 12px 0 6px 0; font-size: 15px; display: flex; align-items: center; gap: 6px; }
+        .item-list { list-style: none; padding: 0; }
+        .item-list li {
+            padding: 10px 12px;
+            background: #f8fafc;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        .link-btn {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 12px;
+            background: #0d6efd;
+            padding: 5px 12px;
+            border-radius: 6px;
+        }
+        .link-btn.free { background: #10b981; }
+
+        /* ألوان أشرطة المواد */
+        .arabic { border-right-color: #e11d48; }
+        .english { border-right-color: #2563eb; }
+        .math { border-right-color: #d97706; }
+        .science { border-right-color: #059669; }
+        .social { border-right-color: #7c3aed; }
+
+        /* صندوق النصيحة */
+        .reminder-box {
+            background: #fffbe3;
+            border: 1px solid #fde047;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 25px;
+            text-align: center;
+            color: #854d0e;
+            font-size: 14px;
+        }
+
+        footer { text-align: center; padding: 20px; color: #64748b; font-size: 13px; margin-top: 30px; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>EduLearn Academy</h1>
-    </header>
+    <div class="header">
+        <h1>📚 EduLearn Academy <span class="user-badge">طالب متفوق</span></h1>
+    </div>
 
-    <nav aria-label="Main Navigation">
-      <a href="#home">الرئيسية</a>
-
-      <!-- Courses dropdown -->
-      <div class="nav-dropdown" id="coursesDropdown">
-        <button class="nav-toggle" aria-haspopup="true" aria-expanded="false" id="coursesToggle">الكورسات ▾</button>
-        <div class="menu" role="menu" aria-labelledby="coursesToggle">
-          <a href="#course-english" role="menuitem">1 - كورس إنجليزي</a>
-          <a href="#course-german" role="menuitem">2 - كورس ألماني</a>
-          <a href="#course-french" role="menuitem">3 - كورس لغة فرنسية</a>
-          <a href="#course-webdesign" role="menuitem">4 - كورس تصميم مواقع إنترنت</a>
-        </div>
-      </div>
-
-      <a href="#about">عن الموقع</a>
-      <a href="#contact">تواصل معنا</a>
+    <nav>
+        <a href="index.html">الرئيسية</a>
+        <a href="translator.html">المترجم الذكي</a>
+        <a href="test.html">اختبار المستوى</a>
     </nav>
 
-    <section class="hero" id="home">
-        <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=600" alt="Child Learning">
-        <h2>Start Learning Today</h2>
-        <p>Explore thousands of interactive courses from top educators worldwide.</p>
-        
-        <div class="btn-group">
-         <a href="test.html" class="btn btn-primary">Start Level Test</a>
-         <a href="translator.html" class="btn btn-secondary">Smart Translator</a>
-        </div>
-    </section>
-
-    <div class="trial-banner">
-        🎉 Special Offer: Enjoy a 2-Month Free Trial!
-    </div>
-
-    <div class="container" id="courses-section">
-        <h3>Featured Courses</h3>
-        <div class="courses">
-            <div class="card" id="course-webdev">
-                <h4>💻 Web Development</h4>
-                <p>Learn HTML, CSS, and JavaScript from scratch.</p>
-            </div>
-
-            <div class="card" id="course-data">
-                <h4>📊 Data Science</h4>
-                <p>Master Python, SQL, and data analysis concepts.</p>
-            </div>
-
-            <div class="card" id="course-digital">
-                <h4>🚀 Digital Marketing</h4>
-                <p>Build strategies for SEO, social media, and ads.</p>
-            </div>
-
-            <!-- Language & other courses with anchor IDs referenced by the dropdown -->
-            <div class="card" id="course-english">
-                <h4>💬 🇬🇧 كورس إنجليزي — English Course</h4>
-                <p>تعلم القواعد والمحادثة والمهارات الأساسية لتطوير لغتك الإنجليزية.</p>
-            </div>
-
-            <div class="card" id="course-german">
-                <h4>🗣️ 🇩🇪 كورس ألماني — German Course</h4>
-                <p>تعلم قواعد ومفردات اللغة الألمانية ومهارات المحادثة للمبتدئين والمتقدمين.</p>
-            </div>
-
-            <div class="card" id="course-french">
-                <h4>🇫🇷 كورس لغة فرنسية — French Course</h4>
-                <p>دورات لتعلم اللغة الفرنسية من الأساس وحتى المستوى المتقدم.</p>
-            </div>
-
-            <div class="card" id="course-webdesign">
-                <h4>🎨 كورس تصميم مواقع إنترنت — Web Design</h4>
-                <p>تعرف على تصميم واجهات المستخدم، تجربة المستخدم، وأساسيات بناء مواقع جذابة.</p>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- About & Contact sections so the nav anchors have targets -->
     <div class="container">
-      <section id="about">
-        <h3>عن الموقع</h3>
-        <p>منصة EduLearn لتعلّم المهارات الرقمية واللغات. نقدم دورات تفاعلية ومناهج متجددة.</p>
-      </section>
 
-      <section id="contact" style="margin-top:18px;">
-        <h3>تواصل معنا</h3>
-        <p>البريد الإلكتروني: info@example.com</p>
-      </section>
+        <!-- بطاقة الحكمة والتأهيل -->
+        <div class="motivation-card" id="motivationCard"></div>
+
+        <!-- اختيار الصف الدراسي -->
+        <div class="grade-selector">
+            <button class="grade-btn active" data-grade="1">الصف الأول الإعدادي</button>
+            <button class="grade-btn" data-grade="2">الصف الثاني الإعدادي</button>
+            <button class="grade-btn" data-grade="3">الصف الثالث الإعدادي</button>
+        </div>
+
+        <!-- عرض المواد الدراسية -->
+        <div class="subjects-grid" id="subjectsContainer"></div>
+
+        <div class="reminder-box">
+            🤝 <strong>نصيحة اليوم:</strong> الاستمرار القليل والمداومة يومياً في المذاكرة والمراجعة مجاناً يُصنع منه أبطال وأوائل الجمهورية!
+        </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 EduLearn Academy. All rights reserved.</p>
+        &copy; 2026 EduLearn Academy - طريقك نحو القمة والتفوق.
     </footer>
 
     <script>
-      // Dropdown toggle and accessibility handling
-      (function () {
-        const dropdown = document.getElementById('coursesDropdown');
-        const toggle = document.getElementById('coursesToggle');
-        const menu = dropdown.querySelector('.menu');
+        // التحفيز والدعاء
+        const motivationalData = [
+            {
+                img: "https://images.unsplash.com/photo-1506784365847-bad5c72e44ba?w=700",
+                wisdom: "💡 من سار على الدرب وصل.. ابدأ الآن ولا تؤجل عمل اليوم إلى الغد.",
+                duaa: "🤲 اللهم إني أسألك فهم النبيين وحفظ المرسلين، واجعل لساني عامراً بذكرك وقلبي بخشيتك."
+            },
+            {
+                img: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=700",
+                wisdom: "💡 النجاح هو مجمل أخطاء صغيرة يتم تصحيحها كل يوم بالمراجعة والاستمرار.",
+                duaa: "🤲 اللهم لا سهل إلا ما جعلته سهلاً، وأنت تجعل الحزن إذا شئت سهلاً، يسر لي كل عسير."
+            }
+        ];
 
-        function openDropdown() {
-          dropdown.classList.add('open');
-          toggle.setAttribute('aria-expanded', 'true');
+        function setMotivation() {
+            const random = motivationalData[Math.floor(Math.random() * motivationalData.length)];
+            document.getElementById('motivationCard').innerHTML = `
+                <img src="${random.img}" class="motivation-img" alt="Motivation">
+                <div class="motivation-text">
+                    <div class="wisdom">${random.wisdom}</div>
+                    <div class="duaa">${random.duaa}</div>
+                </div>
+            `;
         }
-        function closeDropdown() {
-          dropdown.classList.remove('open');
-          toggle.setAttribute('aria-expanded', 'false');
+        setMotivation();
+
+        // قاعدة بيانات الصفوف والمواد الخمس بجميع امتحاناتها
+        const subjectsData = {
+            1: [
+                { name: "اللغة العربية", icon: "📖", cls: "arabic" },
+                { name: "اللغة الإنجليزية", icon: "🔤", cls: "english" },
+                { name: "الرياضيات", icon: "🧮", cls: "math" },
+                { name: "العلوم", icon: "🔬", cls: "science" },
+                { name: "الدراسات الاجتماعية", icon: "🌍", cls: "social" }
+            ],
+            2: [
+                { name: "اللغة العربية", icon: "📖", cls: "arabic" },
+                { name: "اللغة الإنجليزية", icon: "🔤", cls: "english" },
+                { name: "الرياضيات", icon: "🧮", cls: "math" },
+                { name: "العلوم", icon: "🔬", cls: "science" },
+                { name: "الدراسات الاجتماعية", icon: "🌍", cls: "social" }
+            ],
+            3: [
+                { name: "اللغة العربية", icon: "📖", cls: "arabic" },
+                { name: "اللغة الإنجليزية", icon: "🔤", cls: "english" },
+                { name: "الرياضيات", icon: "🧮", cls: "math" },
+                { name: "العلوم", icon: "🔬", cls: "science" },
+                { name: "الدراسات الاجتماعية", icon: "🌍", cls: "social" }
+            ]
+        };
+
+        let currentGrade = 1;
+
+        function renderSubjects(grade) {
+            const container = document.getElementById('subjectsContainer');
+            const subjects = subjectsData[grade];
+            let html = '';
+
+            subjects.forEach((sub) => {
+                html += `
+                <div class="subject-card ${sub.cls}" onclick="toggleSubject(this)">
+                    <div class="subject-header">
+                        <span>${sub.icon} ${sub.name}</span>
+                        <span style="font-size: 14px; color: #64748b;">▼</span>
+                    </div>
+                    <div class="subject-content">
+                        
+                        <div class="section-title">📘 الدروس والشرح المباشر</div>
+                        <ul class="item-list">
+                            <li><span>شرح دروس المنهج الرسمية</span> <a href="#" class="link-btn free">مجاني</a></li>
+                            <li><span>ملخص القواعد والمصطلحات</span> <a href="#" class="link-btn free">تحميل PDF</a></li>
+                        </ul>
+
+                        <div class="section-title">📑 امتحانات الوحدات (Unit Tests)</div>
+                        <ul class="item-list">
+                            <li><span>امتحان الوحدة الأولى التفاعلي</span> <a href="#" class="link-btn">ابدأ الاختبار</a></li>
+                            <li><span>امتحان الوحدة الثانية التفاعلي</span> <a href="#" class="link-btn">ابدأ الاختبار</a></li>
+                        </ul>
+
+                        <div class="section-title">🗓️ امتحانات التقييم الشهرية</div>
+                        <ul class="item-list">
+                            <li><span>اختبار شهر أكتوبر الرسمي</span> <a href="#" class="link-btn">خوض الاختبار</a></li>
+                            <li><span>اختبار شهر نوفمبر الرسمي</span> <a href="#" class="link-btn">خوض الاختبار</a></li>
+                        </ul>
+
+                        <div class="section-title">🏆 امتحان الترم (منتصف العام)</div>
+                        <ul class="item-list">
+                            <li><span>نموذج امتحان نصف العام الشامل #1</span> <a href="#" class="link-btn">ابدأ الآن</a></li>
+                        </ul>
+
+                        <div class="section-title">🔄 التحديث الأسبوعي والمراجعة المكثفة</div>
+                        <ul class="item-list">
+                            <li><span>بنك أسئلة المراجعة الأسبوعية التفاعلي</span> <a href="#" class="link-btn free">متاحة مجاناً</a></li>
+                        </ul>
+
+                        <div class="section-title">🔒 امتحانات آخر العام (الترم الثاني)</div>
+                        <ul class="item-list">
+                            <li style="opacity: 0.7;"><span>تفتح تلقائياً في النصف الثاني من العام الدراسي</span> <span style="font-size:11px; color:#64748b;">قريباً</span></li>
+                        </ul>
+
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = html;
         }
 
-        toggle.addEventListener('click', function (ev) {
-          ev.stopPropagation();
-          const isOpen = dropdown.classList.contains('open');
-          if (isOpen) closeDropdown(); else openDropdown();
+        function toggleSubject(card) {
+            const content = card.querySelector('.subject-content');
+            const arrow = card.querySelector('.subject-header span:last-child');
+            
+            document.querySelectorAll('.subject-content.open').forEach(openContent => {
+                if (openContent !== content) {
+                    openContent.classList.remove('open');
+                    openContent.parentElement.querySelector('.subject-header span:last-child').textContent = '▼';
+                }
+            });
+
+            content.classList.toggle('open');
+            arrow.textContent = content.classList.contains('open') ? '▲' : '▼';
+        }
+
+        document.querySelectorAll('.grade-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.grade-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentGrade = parseInt(this.dataset.grade);
+                renderSubjects(currentGrade);
+            });
         });
 
-        // Close when clicking outside
-        document.addEventListener('click', function (ev) {
-          if (!dropdown.contains(ev.target)) closeDropdown();
-        });
-
-        // Close on Escape key
-        document.addEventListener('keydown', function (ev) {
-          if (ev.key === 'Escape') closeDropdown();
-        });
-
-        // Enable keyboard navigation inside menu
-        const items = Array.from(menu.querySelectorAll('a'));
-        items.forEach((item, idx) => {
-          item.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowDown') { e.preventDefault(); items[(idx+1)%items.length].focus(); }
-            if (e.key === 'ArrowUp') { e.preventDefault(); items[(idx-1+items.length)%items.length].focus(); }
-          });
-        });
-      })();
+        renderSubjects(1);
     </script>
 </body>
-</html>
+    </html>
+    
