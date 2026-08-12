@@ -28,9 +28,65 @@
         .user-badge { background: rgba(255,255,255,0.2); border-radius: 20px; padding: 4px 12px; font-size: 13px; }
 
         /* القائمة العلوية */
-        nav { background: #0f172a; padding: 10px; text-align: center; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-        nav a { color: #f8fafc; text-decoration: none; font-size: 14px; font-weight: 600; padding: 4px 10px; border-radius: 6px; }
+        nav { 
+            background: #0f172a; 
+            padding: 10px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            gap: 12px; 
+            flex-wrap: wrap; 
+        }
+        nav a { 
+            color: #f8fafc; 
+            text-decoration: none; 
+            font-size: 14px; 
+            font-weight: 600; 
+            padding: 6px 12px; 
+            border-radius: 6px; 
+            transition: background 0.2s;
+        }
         nav a:hover { background: #334155; }
+
+        /* قائمة الكورسات المنسدلة */
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-btn {
+            background: transparent;
+            color: #f8fafc;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .dropdown:hover .dropdown-btn { background: #334155; }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: #ffffff;
+            min-width: 170px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            z-index: 1000;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+        .dropdown-content a {
+            color: #1e293b;
+            padding: 10px 14px;
+            text-decoration: none;
+            display: block;
+            text-align: right;
+            font-size: 13px;
+        }
+        .dropdown-content a:hover { background-color: #f1f5f9; color: #0d6efd; }
+        .dropdown:hover .dropdown-content { display: block; }
 
         .container { max-width: 850px; margin: 20px auto; padding: 0 15px; }
 
@@ -150,8 +206,20 @@
 
     <nav>
         <a href="index.html">الرئيسية</a>
+        
+        <!-- قائمة الكورسات المنسدلة -->
+        <div class="dropdown">
+            <button class="dropdown-btn">الكورسات ▾</button>
+            <div class="dropdown-content">
+                <a href="#">🇬🇧 كورس اللغة الإنجليزية</a>
+                <a href="#">🇫🇷 كورس اللغة الفرنسية</a>
+                <a href="#">🇩🇪 كورس اللغة الألمانية</a>
+            </div>
+        </div>
+
         <a href="translator.html">المترجم الذكي</a>
         <a href="test.html">اختبار المستوى</a>
+        <a href="#" style="background: #2563eb; color: white;">الاشتراك والتسجيل بالمركز</a>
     </nav>
 
     <div class="container">
