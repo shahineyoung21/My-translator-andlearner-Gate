@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - EduLearn</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f6f9;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        /* هيدر */
+        .header {
+            background: linear-gradient(135deg, #1e3a8a, #0d6efd);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .header h1 { font-size: 24px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .user-badge { background: rgba(255,255,255,0.2); border-radius: 20px; padding: 5px 15px; font-size: 14px; }
+
+        /* حاوية عامة */
+        .container { max-width: 800px; margin: 20px auto; padding: 0 15px; }
+
+        /* بطاقة تحفيزية */
+        .motivation-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+            position: relative;
+        }
+        .motivation-img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            display: block;
+        }
+        .motivation-text {
+            padding: 20px;
+            text-align: center;
+        }
+        .wisdom {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 10px;
+            font-style: italic;
+            line-height: 1.7;
+        }
+        .duaa {
+            font-size: 15px;
+            color: #475569;
+            background: #f1f5f9;
+            padding: 12px 15px;
+            border-radius: 12px;
+            border-right: 4px solid #0d6efd;
+            margin-top: 10px;
+            text-align: right;
+        }
+        .duaa::before { content: "🤲 "; }
+
+        /* محول الصفوف */
+        .grade-selector {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+        .grade-btn {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #334155;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+        .grade-btn.active {
+            border-color: #0d6efd;
+            background: #eff6ff;
+            color: #0d6efd;
+            box-shadow: 0 6px 16px rgba(13,110,253,0.12);
+            transform: translateY(-2px);
+        }
+
+        /* مواد */
+        .subjects-grid {
+            display: grid;
+            gap: 15px;
+        }
+        .subject-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            border-right: 6px solid #ccc;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+        .subject-card:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
+        .subject-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .subject-icon { font-size: 28px; margin-left: 10px; }
+
+        /* درج المحتوى */
+        .subject-content {
+            display: none;
+            margin-top: 15px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 15px;
+        }
+        .subject-content.open { display: block; }
+
+        .section-title {
+            font-weight: 700;
+            color: #0d6efd;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        .lesson-list, .test-list, .review-list {
+            list-style: none;
+            padding-right: 10px;
+            margin-bottom: 15px;
+        }
+        .lesson-list li, .test-list li, .review-list li {
+            padding: 10px 12px;
+            background: #f8fafc;
+            border-radius: 10px;
+            margin-bottom: 6px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #334155;
+            border: 1px solid #f1f5f9;
+        }
+        .lesson-list li::before { content: "📖"; }
+        .test-list li::before { content: "📝"; }
+        .review-list li::before { content: "🧠"; }
+
+        .link-btn {
+            display: inline-block;
+            margin-left: auto;
+            color: #0d6efd;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+            background: #eff6ff;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        /* قسم تذكرة */
+        .reminder-box {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            border-radius: 16px;
+            padding: 16px;
+            margin-top: 25px;
+            text-align: center;
+            color: #7c2d12;
+            font-weight: 500;
+            font-size: 15px;
+        }
+        .reminder-box span { font-size: 20px; }
+
+        /* تجاوب */
+        @media (max-width: 500px) {
+            .grade-btn { font-size: 16px; padding: 12px; }
+            .subject-header { font-size: 16px; }
+        }
+
+        /* ألوان المواد */
+        .arabic { border-right-color: #e11d48; }
+        .english { border-right-color: #2563eb; }
+        .math { border-right-color: #d97706; }
+        .science { border-right-color: #059669; }
+        .social { border-right-color: #7c3aed; }
+    </style>
+</head>
+<body>
+
+    <!-- هيدر -->
+    <div class="header">
+        <h1>
+            📚 EduLearn
+            <span class="user-badge">🧑‍🎓 طالب العلم</span>
+        </h1>
+    </div>
+
+    <div class="container">
+
+        <!-- بطاقة تحفيزية -->
+        <div class="motivation-card" id="motivationCard">
+            <!-- الصورة والحكمة والدعاء يتم توليدها تلقائيا بالأسفل -->
+        </div>
+
+        <!-- محول الصفوف -->
+        <div class="grade-selector">
+            <button class="grade-btn active" data-grade="2">الصف الثاني الإعدادي</button>
+            <button class="grade-btn" data-grade="3">الصف الثالث الإعدادي</button>
+        </div>
+
+        <!-- شبكة المواد -->
+        <div class="subjects-grid" id="subjectsContainer">
+            <!-- يتم توليدها ديناميكيا -->
+        </div>
+
+        <!-- تذكرة -->
+        <div class="reminder-box">
+            <span>🤝</span> <strong>تذكّر:</strong> الصاحب ساحب، فاختر صديقك الذي يعينك على الطاعة والاجتهاد، واحذر قرناء السوء فإنهم كالنار يحرقون مستقبلك. <br> <small>«المرء على دين خليله فلينظر أحدكم من يخالل»</small>
+        </div>
+    </div>
+
+    <script>
+        // ========== محتوى تحفيزي عشوائي ==========
+        const motivationalData = [
+            {
+                img: "https://images.unsplash.com/photo-1506784365847-bad5c72e44ba?w=600",
+                wisdom: "اطلب العلم من المهد إلى اللحد. فالعلم نورٌ يضيء دروب الحياة.",
+                duaa: "اللهم إني أسألك فهم النبيين وحفظ المرسلين، اللهم افتح عليّ فتوح العارفين، وبارك لي في وقتي وعقلي."
+            },
+            {
+                img: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=600",
+                wisdom: "من سار على الدرب وصل. لا تنتظر الظروف المثالية، ابدأ بما تملك.",
+                duaa: "اللهم لا سهل إلا ما جعلته سهلاً، وأنت تجعل الحزن إذا شئت سهلاً، اللهم يسّر أمري واشرح صدري للعلم."
+            },
+            {
+                img: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600",
+                wisdom: "التعليم هو جواز السفر للمستقبل، لأن الغد ملك لأولئك الذين يستعدون له اليوم.",
+                duaa: "ربِّ زدني علماً، وارزقني الحكمة وحسن الفهم، واجعلني من عبادك الصالحين المخلصين."
+            }
+        ];
+
+        function setMotivation() {
+            const random = motivationalData[Math.floor(Math.random() * motivationalData.length)];
+            const card = document.getElementById('motivationCard');
+            card.innerHTML = `
+                <img src="${random.img}" alt="تحفيز" class="motivation-img">
+                <div class="motivation-text">
+                    <div class="wisdom">💡 ${random.wisdom}</div>
+                    <div class="duaa">${random.duaa}</div>
+                </div>
+            `;
+        }
+        setMotivation();
+
+        // ========== بيانات المواد حسب الصف ==========
+        const subjectsData = {
+            2: [
+                { name: "اللغة العربية", icon: "📖", cls: "arabic", lessons: ["النحو: المبتدأ والخبر", "القراءة: درس العلم", "الأدب: أبو القاسم الشابي"], tests: ["اختبار شهر أكتوبر", "اختبار شهر نوفمبر", "امتحان الترم الأول"], reviews: ["ملخص القواعد", "كلمات الإملاء الشائعة"] },
+                { name: "اللغة الإنجليزية", icon: "🔤", cls: "english", lessons: ["Grammar: Past Simple", "Reading: Short Stories", "Vocabulary: Unit 3"], tests: ["Placement Test", "Monthly Test 1", "Term 1 Exam"], reviews: ["Irregular Verbs List", "Common Phrases"] },
+                { name: "الرياضيات", icon: "🧮", cls: "math", lessons: ["الجبر: الأعداد الحقيقية", "الهندسة: التشابه", "الإحصاء: التمثيل البياني"], tests: ["اختبار جبر شهر أكتوبر", "اختبار هندسة نوفمبر", "امتحان الترم الأول"], reviews: ["قوانين المساحات", "خطوات حل المعادلات"] },
+                { name: "العلوم", icon: "🔬", cls: "science", lessons: ["الجدول الدوري", "الروابط الكيميائية", "الحركة والطاقة"], tests: ["اختبار علوم شهر أكتوبر", "اختبار علوم نوفمبر", "امتحان الترم الأول"], reviews: ["رموز العناصر", "قوانين السرعة"] },
+                { name: "الدراسات الاجتماعية", icon: "🌍", cls: "social", lessons: ["التاريخ: الدولة العثمانية", "الجغرافيا: تضاريس الوطن العربي", "المواطنة: حقوق الطفل"], tests: ["اختبار تاريخ أكتوبر", "اختبار جغرافيا نوفمبر", "امتحان الترم الأول"], reviews: ["خرائط ذهنية للدروس", "تواريخ مهمة"] }
+            ],
+            3: [
+                { name: "اللغة العربية", icon: "📖", cls: "arabic", lessons: ["النحو: المنادى", "البلاغة: التشبيه", "الأدب: المنفلوطي"], tests: ["اختبار شهر أكتوبر", "اختبار شهر نوفمبر", "امتحان الترم الأول"], reviews: ["أسئلة نحوية شاملة", "قطع بلاغة محلولة"] },
+                { name: "اللغة الإنجليزية", icon: "🔤", cls: "english", lessons: ["Grammar: Conditionals", "Reading: Articles", "Writing: Paragraph"], tests: ["Monthly Test 1", "Term 1 Exam"], reviews: ["Phrasal Verbs", "Essay Tips"] },
+                { name: "الرياضيات", icon: "🧮", cls: "math", lessons: ["الجبر: الدوال", "الهندسة: الدائرة", "حساب المثلثات"], tests: ["اختبار أكتوبر", "اختبار نوفمبر", "امتحان الترم الأول"], reviews: ["قوانين حساب المثلثات", "نظريات الهندسة"] },
+                { name: "العلوم", icon: "🔬", cls: "science", lessons: ["الوراثة", "التكاثر", "الكهرباء والمغناطيسية"], tests: ["اختبار علوم أكتوبر", "اختبار علوم نوفمبر", "امتحان الترم الأول"], reviews: ["مخططات الوراثة", "قوانين أوم"] },
+                { name: "الدراسات الاجتماعية", icon: "🌍", cls: "social", lessons: ["التاريخ: الحرب العالمية الأولى", "الجغرافيا: المناخ", "الاقتصاد: الموارد"], tests: ["اختبار تاريخ أكتوبر", "اختبار جغرافيا نوفمبر", "امتحان الترم الأول"], reviews: ["مصطلحات اقتصادية", "خرائط المناخ"] }
+            ]
+        };
+
+        let currentGrade = 2;
+
+        function renderSubjects(grade) {
+            const container = document.getElementById('subjectsContainer');
+            const subjects = subjectsData[grade];
+            let html = '';
+            subjects.forEach((sub, index) => {
+                html += `
+                <div class="subject-card ${sub.cls}" onclick="toggleSubject(this)" data-index="${index}">
+                    <div class="subject-header">
+                        <span>${sub.icon} ${sub.name}</span>
+                        <span style="font-size: 14px; color: #64748b;">▼</span>
+                    </div>
+                    <div class="subject-content">
+                        <div class="section-title">📚 المحتوى التعليمي</div>
+                        <ul class="lesson-list">
+                            ${sub.lessons.map(l => `<li>${l} <a href="#" class="link-btn">فتح</a></li>`).join('')}
+                        </ul>
+                        <div class="section-title">📝 الاختبارات</div>
+                        <ul class="test-list">
+                            ${sub.tests.map(t => `<li>${t} <a href="#" class="link-btn">ابدأ</a></li>`).join('')}
+                        </ul>
+                        <div class="section-title">🧠 مراجعات التقوية</div>
+                        <ul class="review-list">
+                            ${sub.reviews.map(r => `<li>${r} <a href="#" class="link-btn">مراجعة</a></li>`).join('')}
+                        </ul>
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function toggleSubject(card) {
+            const content = card.querySelector('.subject-content');
+            const arrow = card.querySelector('.subject-header span:last-child');
+            // إغلاق الكروت الأخرى
+            document.querySelectorAll('.subject-content.open').forEach(openContent => {
+                if (openContent !== content) {
+                    openContent.classList.remove('open');
+                    openContent.parentElement.querySelector('.subject-header span:last-child').textContent = '▼';
+                }
+            });
+            // فتح/إغلاق الحالي
+            content.classList.toggle('open');
+            arrow.textContent = content.classList.contains('open') ? '▲' : '▼';
+        }
+
+        // التعامل مع أزرار الصفوف
+        document.querySelectorAll('.grade-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.grade-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentGrade = parseInt(this.dataset.grade);
+                renderSubjects(currentGrade);
+            });
+        });
+
+        // تحميل أولي
+        renderSubjects(2);
+    </script>
+</body>
+</html>
